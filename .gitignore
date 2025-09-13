@@ -1,4 +1,2 @@
 .gitattributes
-sample_docs/*
-!sample_docs/.gitkeep
-
+sample_docs
