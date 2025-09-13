@@ -1,90 +1,32 @@
 # DSPy extraction data pipeline for assisted prompt enhancing
 
-## Run the code
+The structure of this project follows the convention of [🍪📊
+cookiecutter-datascience](https://cookiecutter-data-science.drivendata.org/#directory-structure)
+with those specificities:
 
-### Requirements
+- the python package with the source code to be run locally on the notebooks or
+in the experimental scripts is in a **poetry project**, defined in the `src`
+subdirectory
+- most of the code in the [`./models/`](./models/) subdirectory is there to
+serve remote models reachable through HTTP connections
 
-- `poetry` (>=2.1)
-- `just` if you are lazy with the commands
-- a connection with an OLlama server
+## Set the environment
 
-### Install dependencies
+Please visit the [Installation section of the
+documentation](https://magoh-ai-docs.mappa.cloud.thormas.fr/install/).
 
-```sh
-poetry install
-```
+## Try some experiments
 
-### Set up the environment
+The
+[`3.0-Convolutio-complete_pipeline.ipynb`](./notebooks/exploratory/3.0-Convolutio-complete_pipeline.ipynb)
+notebook contains the most straight-forward code to demonstrate the last
+features of this project, including:
 
-#### Using your own remote OLlama model
+- inferring in the most complex model with a set of archaeological excavation
+reports
+- optimizing this model
+- evaluating it and plotting its scores
 
-To use a remote cluster, the `justfile` coupled with the `.env` enable to
-connect to an ollama server within a ssh tunnel
-
-1. Fill in a `.env` file with the credentials of your cluster, as in the
-   part 2 of the `.env.example` file
-
-2. Start the server remotely
-
-   ```sh
-   just start-ollama
-   ```
-
-3. Launch the tunnel :
-
-   ```sh
-   just connect_remote_llm
-   ```
-
-   Then you can run your prompts by following the instructions in the next section.
-
-4. When you have finished, stop the tunnel and stop the ollama server with
-   running this command
-
-   ```sh
-   just stop-ollama
-   ```
-
-#### Using an OpenAPI remote model
-
-You must set in a `.env` file located in the same directory as this README the
-following secret environment variable
-
-```sh
-OPENAI_API_KEY='<your-secret-api-key>'
-```
-
-### Test some prompting
-
-> For using the notebooks, read [this README](./notebooks/README.md).
-
-The training must be fetchable from these two endpoints:
-- a postgresql database with the following tables:
-  - `intervention_data`
-  - `findings`
-- a minio file storage in which there is the pdf documents related to each
-intervention record in the postgresql database
-
-You need to fill in a `.env` file to write their credentials, as in the
-`.env.example`.
-
-The results in each pipeline's layer are cached in the `.cache/` directory.
-
-```sh
-just run_main
-```
-
-### Inspect the experiments with MLflow
-
-The traces of the exchanges with the LLM can be viewed in a user-friendly
-interface thanks to the Mlflow tracing. These traces are located in a `mlruns/`
-untracked directory.
-
-To view them in the local interface, run
-
-```sh
-just trace
-```
-
-Next, inspect them on `http://localhost:5000`, in the `DSPy > Traces`
-tab.
+To set your custom experiments and create other models (e.g. with just
+different hyperparameters, etc.), please read [the *How-to guides in the
+documentation*](https://magoh-ai-docs.mappa.cloud.thormas.fr/how-to-guides/).
